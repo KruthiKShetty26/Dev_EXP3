@@ -1,67 +1,47 @@
-Experiment 7: Jenkins Freestyle Job
-Goal: Automate the process of fetching code from GitHub, building it with Maven, and saving the resulting .jar file.
+Experiment 7: Jenkins Freestyle Job (Manual Build)
+Goal: Prove you can link GitHub to Jenkins and build a project.
 
-Step 1: Create the Project
-Open Jenkins in your browser (http://localhost:8080).
+Phase 1: The "Fresh" Terminal Setup
+Before opening Jenkins, you need to make sure the computer knows where Maven is.
 
-On the left sidebar, click New Item.
+Open Command Prompt.
 
-Enter an item name: Type Exp7_Freestyle_Build.
+Type mvn -version. If it shows a version number, you are good. If not, tell the lab instructor.
 
-Select a type: Click on Freestyle project.
+Phase 2: Jenkins Configuration
+Open Chrome and go to http://localhost:8080.
 
-Click OK at the bottom.
+Create Job: Click New Item → Name: Exp7_Freestyle → Select Freestyle project → Click OK.
 
-Step 2: Source Code Management (The "Pull" Task)
-This tells Jenkins where your code is located on GitHub.
+Link GitHub (Source Code Management):
 
-Scroll down to the Source Code Management section.
+Select Git.
 
-Select the radio button for Git.
+Repository URL: https://github.com/KruthiKShetty26/Dev_EXP3.git
 
-Repository URL: Paste your repo link: https://github.com/KruthiKShetty26/Dev_EXP3.git
+Branch Specifier: Change */master to */main (Check your GitHub to see which name you use).
 
-Credentials: Leave as none (since your repo is public).
+The Build Step:
 
-Branch Specifier: Ensure it says */main (or */master if that is your default branch name).
+Scroll to Build Steps.
 
-Step 3: Build Steps (The "Build" Task)
-This tells Jenkins to run the Maven commands automatically.
+Click Add build step → Invoke top-level Maven targets.
 
-Scroll down to the Build Steps section.
-
-Click the Add build step dropdown button.
-
-Select Invoke top-level Maven targets.
-
-Maven Version: Choose the version available in the dropdown (usually Maven 3.9 or Default).
+Maven Version: Select the one available (e.g., Maven 3.9).
 
 Goals: Type clean package.
 
-Note: This cleans the old build and creates a new .jar file.
+Archive the Result (Post-build Actions):
 
-Step 4: Post-build Actions (The "Archive" Task)
-This saves the final output so it doesn't get deleted when the job finishes.
-
-Scroll down to the Post-build Actions section.
-
-Click the Add post-build action dropdown.
-
-Select Archive the artifacts.
+Click Add post-build action → Archive the artifacts.
 
 Files to archive: Type target/*.jar.
 
-Note: This tells Jenkins to look in the target folder and save any file ending in .jar.
+Save & Run: Click Save. Click Build Now.
 
-Step 5: Run and Verify
-Click the Save button at the bottom.
+Phase 3: Verify (How to show the teacher)
+Click the Blue Ball (or the #1 build).
 
-On the left-hand menu, click Build Now.
+Click Console Output.
 
-Check Progress: You will see a small circle appearing under "Build History" on the bottom left.
-
-Check Logs: Click the small arrow next to the build number (e.g., #1) and select Console Output.
-
-Look for the message: BUILD SUCCESS.
-
-View Outcome: Go back to the Project dashboard. You should now see a section called "Last Successful Artifacts" showing your sample-app-1.0-SNAPSHOT.jar.
+Scroll to the bottom. If you see BUILD SUCCESS, you are done with Exp 7!
