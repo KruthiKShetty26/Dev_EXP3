@@ -1,55 +1,68 @@
-Experiment 8: Jenkins Build Triggers
-Goal: Automate the build start using two methods: Poll SCM (Jenkins checks GitHub) and Webhooks (GitHub tells Jenkins).
+Step 1: Create the Project
+Open Jenkins and click New Item.
 
-Method A: SCM Polling (The "Timer" Method)
-This is the most common lab method because it doesn't require complex network settings.
+Enter Name: Experiment_8_Triggers
 
-Open Project: Go to your Exp7_Freestyle_Build project and click Configure on the left.
+Select Freestyle project and click OK.
 
-Locate Triggers: Scroll down to the Build Triggers section.
+In the Source Code Management section:
 
-Enable Polling: Check the box for Poll SCM.
+Select Git.
 
-Enter Schedule: In the Schedule text box, type:
+Repository URL: https://github.com/KruthiKShetty26/Dev_EXP3.git
+
+Branch Specifier: */main
+
+Step 2: Method A - Configure SCM Polling
+This method is useful if your Jenkins server is behind a firewall and cannot receive external signals.
+
+Scroll to the Build Triggers section.
+
+Check the box Poll SCM.
+
+In the Schedule box, copy and paste this exactly:
+
+Plaintext
 * * * * *
-(Note: That is 5 asterisks with a space between each. This tells Jenkins to check GitHub every single minute.)
+(Note: These five asterisks tell Jenkins to check your GitHub repo every single minute for changes.)
 
-Save: Click Save.
+Step 3: Method B - Configure GitHub Webhook
+This is the professional standard. GitHub "pushes" a notification to Jenkins.
 
-Test it: * Go to your GitHub website and edit your readme.txt or App.java.
+In the same Build Triggers section, check the box:
+GitHub hook trigger for GITScm polling.
 
-Commit the change.
+Note: For a real Webhook to work, you must also go to your GitHub Repository Settings > Webhooks > Add Webhook and enter your Jenkins URL followed by /github-webhook/.
 
-Wait 1 minute. You will see a new build start automatically in Jenkins without you touching anything.
+Step 4: Define a Simple Build Action
+We need Jenkins to do something so we can see the trigger worked.
 
-Method B: GitHub Webhook (The "Instant" Method)
-This is how professional companies do it. GitHub "pokes" Jenkins the second a change happens.
+Scroll to Build Steps.
 
-In Jenkins:
+Click Add build step > Execute Windows batch command.
 
-Go to Configure for your project.
+Enter this command:
 
-Under Build Triggers, check the box: GitHub hook trigger for GITScm polling.
-
+Code snippet
+echo "Trigger Received! Automatic Build Started at:"
+date /t
+time /t
 Click Save.
 
-In GitHub:
+Step 5: Testing the Automatic Trigger
+Go to your GitHub repository (Dev_EXP3) in your browser.
 
-Go to your repository Settings (on the top tab).
+Create a new file or edit the README.md.
 
-Click Webhooks on the left sidebar.
+Commit the change directly on GitHub.
 
-Click Add webhook.
+Go back to your Jenkins Dashboard.
 
-Payload URL: Enter your Jenkins URL + /github-webhook/ (e.g., http://your-ip:8080/github-webhook/).
+Wait for 1 minute. You will see a build start automatically in the Build History without you touching anything.
 
-Content type: Select application/json.
+Verifying the Outcome
+Click on the new automated build number (e.g., #1).
 
-Click Add webhook.
+Select Console Output.
 
-Test it: * Push a change to GitHub. Jenkins should start the build instantly.
-
-Outcome Verification
-Automatic Start: Look at the Build History. You should see a build triggered by "Started by an SCM change" instead of "Started by user Kruthi."
-
-Polling Log: On the project page, click Git Polling Log to see Jenkins checking GitHub.
+Look for a line that says: "Started by an SCM change". This confirms that the build was triggered by your code update rather than a manual click.
