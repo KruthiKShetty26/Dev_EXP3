@@ -1,47 +1,72 @@
-Experiment 7: Jenkins Freestyle Job (Manual Build)
-Goal: Prove you can link GitHub to Jenkins and build a project.
+To perform Experiment 7 using your specific repository, follow these exact steps. This guide assumes you have Jenkins open and Git installed on your system.
 
-Phase 1: The "Fresh" Terminal Setup
-Before opening Jenkins, you need to make sure the computer knows where Maven is.
+Step 1: Create the Job
+Open Jenkins in your browser (usually http://localhost:8080).
 
-Open Command Prompt.
+Click New Item on the left sidebar.
 
-Type mvn -version. If it shows a version number, you are good. If not, tell the lab instructor.
+Enter Item Name: DevOps_Experiment_7
 
-Phase 2: Jenkins Configuration
-Open Chrome and go to http://localhost:8080.
+Select Freestyle project.
 
-Create Job: Click New Item → Name: Exp7_Freestyle → Select Freestyle project → Click OK.
+Click OK.
 
-Link GitHub (Source Code Management):
+Step 2: Configure Source Code (Git)
+Scroll down to the Source Code Management section.
 
-Select Git.
+Select the radio button for Git.
 
-Repository URL: https://github.com/KruthiKShetty26/Dev_EXP3.git
+In Repository URL, copy and paste this exactly:
+https://github.com/KruthiKShetty26/Dev_EXP3.git
 
-Branch Specifier: Change */master to */main (Check your GitHub to see which name you use).
+In Branch Specifier, ensure it says:
+*/main
+(Note: If your default branch is 'master', change it to */master, but most new repos use main).
 
-The Build Step:
+Step 3: Define the Build Commands
+Since this is a Windows environment (based on your lab manual), we will use batch commands to simulate a build process and generate an output file.
 
-Scroll to Build Steps.
+Scroll down to the Build Steps section.
 
-Click Add build step → Invoke top-level Maven targets.
+Click the Add build step dropdown.
 
-Maven Version: Select the one available (e.g., Maven 3.9).
+Select Execute Windows batch command.
 
-Goals: Type clean package.
+In the Command text box, copy and paste these lines exactly:
 
-Archive the Result (Post-build Actions):
+Code snippet
+echo "Starting Build Process for Kruthi's Project..."
+echo "Current Build Date and Time:" > build_log.txt
+date /t >> build_log.txt
+time /t >> build_log.txt
+echo "Build Successful. Artifacts generated." >> build_log.txt
+dir >> build_log.txt
+Step 4: Archive the Results (Artifacts)
+This step ensures the file we just created (build_log.txt) is saved by Jenkins.
 
-Click Add post-build action → Archive the artifacts.
+Scroll down to Post-build Actions.
 
-Files to archive: Type target/*.jar.
+Click Add post-build action.
 
-Save & Run: Click Save. Click Build Now.
+Select Archive the artifacts.
 
-Phase 3: Verify (How to show the teacher)
-Click the Blue Ball (or the #1 build).
+In Files to archive, type exactly:
+build_log.txt
 
-Click Console Output.
+Step 5: Run and Verify
+Click Save at the bottom.
 
-Scroll to the bottom. If you see BUILD SUCCESS, you are done with Exp 7!
+On the left menu, click Build Now.
+
+Wait a few seconds. Under Build History, you will see a blue circle (or green check) with #1.
+
+Click on the #1 (the build number).
+
+Click Console Output to see the logs. It should show:
+SUCCESS
+
+Go back to the Build #1 page. You will see a section called Build Artifacts.
+
+Click on build_log.txt to view the automated output.
+
+You are now done with Experiment 7. This confirms you can successfully pull code from your GitHub repo, run a command-line build, and archive the output.
