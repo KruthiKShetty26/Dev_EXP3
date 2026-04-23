@@ -62,3 +62,15 @@ Port Mapping (-p): Containers live in their own network. To see a web app runnin
 Docker Hub: Think of this as the "GitHub for Docker Images." It's where you download pre-built software like Nginx, MySQL, or Python.
 
 Outcome: You have successfully mastered the basics of containerization, which is the foundation for modern cloud-native development.
+Task 3: Lifecycle Management
+Practice the commands used to clean up your environment:
+
+List Running Containers: docker ps
+
+Stop the Server: docker stop my-web (Browser will now fail to load).
+
+List All (Including Stopped): docker ps -a
+
+Delete the Container: docker rm my-web
+
+List Images on Disk: docker images
