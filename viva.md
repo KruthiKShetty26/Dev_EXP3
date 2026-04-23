@@ -1,6 +1,4 @@
-Since you’ve been working through the practical steps of Git, Maven, and Jenkins, an examiner will likely test if you actually understand *why* you clicked those buttons.
 
-Here are the most likely Viva questions based on our conversation, divided by topic.
 
 ### **Topic 1: Git & GitHub (Exp 1-5)**
 
